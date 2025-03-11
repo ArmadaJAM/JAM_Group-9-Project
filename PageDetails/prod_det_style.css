@@ -1,0 +1,46 @@
+body {
+    background-color: #f8f9fa;
+}
+
+/* Navbar profile image s*/
+.profile-img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+
+.product-image {
+    width: 100%;
+    height: auto;
+}
+
+.thumbnail-image {
+    width: 100%;
+    height: auto;
+}
+
+.product-details {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.similar-items {
+    margin-top: 20px;
+}
+
+.zoom {
+    transition: transform 0.2s; 
+}
+
+.zoom:hover {
+    transform: scale(1.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
