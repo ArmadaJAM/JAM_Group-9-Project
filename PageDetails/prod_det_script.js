@@ -10,9 +10,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupEventListeners() {
-    document.getElementById("login-btn").addEventListener("click", showLogin);
+    document.getElementById("login-btn").addEventListener("click", () => {
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+    });
     document.getElementById("signup-btn").addEventListener("click", showSignup);
     document.getElementById("logout-btn").addEventListener("click", logout);
+    /* Added login form */
+    document.getElementById("loginForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const user = document.getElementById("usernameInput").value;
+        if (user) {
+            localStorage.setItem("user", user);
+            checkUserLogin();
+            const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            loginModal.hide();
+        }
+    });
 }
 
 function showLogin() {
@@ -167,7 +181,7 @@ function getSelectedProduct() {
 // ];
 
 function displayProductDetails(id) {
-    let storedShoes = JSON.parse(localStorage.getItem("shoes")) || []; 
+    let storedShoes = JSON.parse(localStorage.getItem("shoes")) || [];
     const product = storedShoes.find(shoe => shoe.id == id);
     if (product) {
         // Update header content
