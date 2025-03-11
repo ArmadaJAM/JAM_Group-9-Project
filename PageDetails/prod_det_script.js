@@ -19,9 +19,12 @@ function setupEventListeners() {
     /* Added login form */
     document.getElementById("loginForm").addEventListener("submit", (event) => {
         event.preventDefault();
-        const user = document.getElementById("usernameInput").value;
+        const user = {
+            name: document.getElementById("usernameInput").value,
+            cart: []
+        };
         if (user) {
-            localStorage.setItem("user", user);
+            localStorage.setItem("user", JSON.stringify(user));
             checkUserLogin();
             const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
             loginModal.hide();
@@ -50,7 +53,7 @@ function checkUserLogin() {
     if (user) {
         document.getElementById("auth-buttons").classList.add("d-none");
         document.getElementById("user-info").classList.remove("d-none");
-        document.getElementById("username").innerText = user;
+        document.getElementById("username").innerText = JSON.parse(user).name;
     }
 }
 
@@ -82,135 +85,114 @@ function getSelectedProduct() {
     displayProductDetails(selectedShoe.id);
 }
 
-// const shoes = [
-//     {
-//         id: 1,
-//         name: "New Balance 530 Unisex Sneakers Shoes - White/Mauve",
-//         price: 3147.00,
-//         originalPrice: 6295.00,
-//         img: "PageDetails/img/newbalance1.webp",
-//         category: "Sneakers",
-//         description: "The original MR530 combined turn-of-the-millennium aesthetics with the reliability of a high-mileage running shoe. The reintroduced 530 applies a contemporary, everyday style outlook to this performance-minded design.",
-//         productCode: "0803-NEWMRS530SGC",
-//         ratings: "⭐⭐⭐⭐⭐ 36 Ratings",
-//         sizes: ["US 8", "US 9", "US 10", "US 11"],
-//         imageset: [
-//             "img/newbalance1.webp",
-//             "img/newbalance2.webp",
-//             "img/newbalance3.webp",
-//             "img/newbalance4.webp",
-//             "img/newbalance6.webp"
-//         ]
-//     },
-//     {
-//         id: 2,
-//         name: "Nike Air Force 1 Low - White",
-//         price: 4495.00,
-//         originalPrice: 4995.00,
-//         img: "img/nike_air_force_1.jpg",
-//         category: "Casual Sneakers",
-//         description: "The classic Air Force 1 Low offers timeless style with premium leather and a cushioned sole for all-day comfort.",
-//         productCode: "315122-111",
-//         ratings: "⭐⭐⭐⭐⭐ 120 Ratings",
-//         sizes: ["US 7", "US 8", "US 9", "US 10", "US 11"],
-//         imageset: [
-//             "img/newbalance1.webp",
-//             "img/newbalance2.webp",
-//             "img/newbalance3.webp",
-//             "img/newbalance4.webp",
-//             "img/newbalance6.webp"
-//         ]
-//     },
-//     {
-//         id: 3,
-//         name: "Adidas Ultraboost 21 - Core Black",
-//         price: 7500.00,
-//         originalPrice: 9000.00,
-//         img: "img/adidas_ultraboost_21.jpg",
-//         category: "Running Shoes",
-//         description: "Built for high-performance running, the Adidas Ultraboost 21 features responsive Boost cushioning and a Primeknit upper for a snug fit.",
-//         productCode: "FY0377",
-//         ratings: "⭐⭐⭐⭐⭐ 200 Ratings",
-//         sizes: ["US 6", "US 7", "US 8", "US 9", "US 10"],
-//         imageset: [
-//             "img/newbalance1.webp",
-//             "img/newbalance2.webp",
-//             "img/newbalance3.webp",
-//             "img/newbalance4.webp",
-//             "img/newbalance6.webp"
-//         ]
-//     },
-//     {
-//         id: 4,
-//         name: "Puma RS-X3 Puzzle - Multicolor",
-//         price: 4200.00,
-//         originalPrice: 6200.00,
-//         img: "img/puma_rs_x3.jpg",
-//         category: "Lifestyle Sneakers",
-//         description: "A bold and modern sneaker with a mix of mesh and leather, the Puma RS-X3 Puzzle brings retro-futuristic design to your feet.",
-//         productCode: "372884-02",
-//         ratings: "⭐⭐⭐⭐ 85 Ratings",
-//         sizes: ["US 8", "US 9", "US 10", "US 11"],
-//         imageset: [
-//             "img/newbalance1.webp",
-//             "img/newbalance2.webp",
-//             "img/newbalance3.webp",
-//             "img/newbalance4.webp",
-//             "img/newbalance6.webp"
-//         ]
-//     },
-//     {
-//         id: 5,
-//         name: "Vans Old Skool - Black/White",
-//         price: 3200.00,
-//         originalPrice: 4000.00,
-//         img: "img/vans_old_skool.jpg",
-//         category: "Skate Shoes",
-//         description: "A classic skate shoe with a durable canvas and suede upper, featuring the signature Vans side stripe and waffle outsole for grip.",
-//         productCode: "VN000D3HY28",
-//         ratings: "⭐⭐⭐⭐⭐ 95 Ratings",
-//         sizes: ["US 6", "US 7", "US 8", "US 9", "US 10", "US 11"],
-//         imageset: [
-//             "img/newbalance1.webp",
-//             "img/newbalance2.webp",
-//             "img/newbalance3.webp",
-//             "img/newbalance4.webp",
-//             "img/newbalance6.webp"
-//         ]
-//     }
-// ];
 
 function displayProductDetails(id) {
     let storedShoes = JSON.parse(localStorage.getItem("shoes")) || [];
     const product = storedShoes.find(shoe => shoe.id == id);
-    if (product) {
-        // Update header content
-        document.querySelector(".product-details header").innerHTML = `
-            <h2>${product.name}</h2>
-            <p>Product Code: ${product.productCode}</p>
-            <p>${product.ratings}</p>
-            <p><strong>₱${product.price.toFixed(2)}</strong> <del>₱${product.originalPrice.toFixed(2)}</del></p>
-        `;
 
-        // Update section content
-        document.querySelector(".product-details section").innerHTML = `
-            <p>${product.description}</p>
-            <div class="form-group">
-                <label for="size">Size</label>
-                <select class="form-control" id="size">
-                    ${product.sizes.map(size => `<option>${size}</option>`).join('')}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <input type="number" class="form-control" id="quantity" value="1">
-            </div>
-            <button class="btn btn-primary" onclick="buyNow()">Buy Now</button>
-            <button class="btn btn-secondary" onclick="addToCart()">Add to Cart</button>
-            <a href="#" class="d-block mt-3">Share</a>
-        `;
+    const header = document.querySelector(".product-details header");
+    const section = document.querySelector(".product-details section");
+
+    // Clear previous content
+    header.innerHTML = "";
+    section.innerHTML = "";
+
+    if (product) {
+        // Create header elements
+        const title = document.createElement("h2");
+        title.textContent = product.name;
+
+        const productCode = document.createElement("p");
+        productCode.textContent = `Product Code: ${product.productCode}`;
+
+        const ratings = document.createElement("p");
+        ratings.textContent = product.ratings;
+
+        const price = document.createElement("p");
+        const strongPrice = document.createElement("strong");
+        strongPrice.textContent = `₱${product.price.toFixed(2)}`;
+        const delPrice = document.createElement("del");
+        delPrice.textContent = ` ₱${product.originalPrice.toFixed(2)}`;
+
+        price.appendChild(strongPrice);
+        price.appendChild(delPrice);
+
+        // Append header elements
+        header.appendChild(title);
+        header.appendChild(productCode);
+        header.appendChild(ratings);
+        header.appendChild(price);
+
+        // Create section elements
+        const description = document.createElement("p");
+        description.textContent = product.description;
+
+        // Size dropdown
+        const sizeGroup = document.createElement("div");
+        sizeGroup.classList.add("form-group");
+
+        const sizeLabel = document.createElement("label");
+        sizeLabel.setAttribute("for", "size");
+        sizeLabel.textContent = "Size";
+
+        const sizeSelect = document.createElement("select");
+        sizeSelect.classList.add("form-control");
+        sizeSelect.id = "size";
+
+        product.sizes.forEach(size => {
+            const option = document.createElement("option");
+            option.textContent = size;
+            sizeSelect.appendChild(option);
+        });
+
+        sizeGroup.appendChild(sizeLabel);
+        sizeGroup.appendChild(sizeSelect);
+
+        // Quantity input
+        const quantityGroup = document.createElement("div");
+        quantityGroup.classList.add("form-group");
+
+        const quantityLabel = document.createElement("label");
+        quantityLabel.setAttribute("for", "quantity");
+        quantityLabel.textContent = "Quantity";
+
+        const quantityInput = document.createElement("input");
+        quantityInput.classList.add("form-control");
+        quantityInput.id = "quantity";
+        quantityInput.type = "number";
+        quantityInput.value = 1;
+
+        quantityGroup.appendChild(quantityLabel);
+        quantityGroup.appendChild(quantityInput);
+
+        // Buttons
+        const buyNowBtn = document.createElement("button");
+        buyNowBtn.classList.add("btn", "btn-primary");
+        buyNowBtn.textContent = "Buy Now";
+        buyNowBtn.onclick = () => buyNow();
+
+        const addToCartBtn = document.createElement("button");
+        addToCartBtn.classList.add("btn", "btn-secondary");
+        addToCartBtn.textContent = "Add to Cart";
+        addToCartBtn.onclick = () => addToCart();
+
+        // Share link
+        const shareLink = document.createElement("a");
+        shareLink.href = "#";
+        shareLink.classList.add("d-block", "mt-3");
+        shareLink.textContent = "Share";
+
+        // Append section elements
+        section.appendChild(description);
+        section.appendChild(sizeGroup);
+        section.appendChild(quantityGroup);
+        section.appendChild(buyNowBtn);
+        section.appendChild(addToCartBtn);
+        section.appendChild(shareLink);
     } else {
-        document.querySelector(".product-details header").innerHTML = "<p>Product not found.</p>";
+        const notFound = document.createElement("p");
+        notFound.textContent = "Product not found.";
+        header.appendChild(notFound);
     }
 }
 
@@ -219,63 +201,59 @@ function displayProductDetails(id) {
 
 
 
-// // Get the selected product cliked by the user
-// document.addEventListener("DOMContentLoaded", () => {
-//     const selectedProductId = localStorage.getItem("selectedProduct");
-//     if (selectedProductId) {
-//         const product = shoes.find(p => p.id == selectedProductId);
-//         if (product) {
-//             document.querySelector("h2").innerText = product.name;
-//             document.getElementById("mainProductImage").src = product.img;
-//         }
-//     }
-// });
-
-// const thumbnailContainer = document.getElementById("thumbnailContainer");
-// productImages.forEach(imgSrc => {
-//     const thumb = document.createElement("img");
-//     thumb.src = imgSrc;
-//     thumb.classList.add("col-3", "img-thumbnail", "m-1");
-//     thumb.onclick = () => changeImage(thumb);
-//     thumbnailContainer.appendChild(thumb);
-// });
-
-
-
-// const selectedShoe = shoes.find(shoe => shoe.id === 1);
-
-
-// Array of image URLs S
-// const productImages = [
-//     "img/newbalance1.webp",
-//     "img/newbalance2.webp",
-//     "img/newbalance3.webp",
-//     "img/newbalance4.webp",
-//     "img/newbalance6.webp"
-// ];
-
-// const similarItems = [
-//     "img/newbalance1.webp",
-//     "img/newbalance1.webp",
-//     "img/newbalance1.webp",
-//     "img/newbalance1.webp",
-//     "img/newbalance1.webp"
-// ];
-
-// const profileImageSrc = "img/newbalance1.webp";
 
 // Function to handle adding product to cart
 function addToCart() {
-    const quantity = document.getElementById('quantity').value;
-    const totalAmount = 3147 * quantity;
-    alert('Product added to cart!' + '\n' + 'Total Amount: $' + totalAmount.toFixed(2));
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+    
+    if (!currentUser) {
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
+    }
+
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const price = selectedShoe.price;
+    const totalAmount = price * quantity;
+
+    let newItem = {
+        id: selectedShoe.id,
+        name: selectedShoe.name,
+        img: selectedShoe.img,
+        price: price,
+        quantity: quantity,
+        totalAmount: totalAmount
+    };
+
+    let existingItemIndex = currentUser.cart.findIndex(item => item.id === newItem.id);
+
+    if (existingItemIndex !== -1) {
+        // Update existing item
+        currentUser.cart[existingItemIndex].quantity += newItem.quantity;
+        currentUser.cart[existingItemIndex].totalAmount += newItem.totalAmount;
+    } else {
+        // Add new item to cart
+        currentUser.cart.push(newItem);
+    }
+
+    localStorage.setItem("user", JSON.stringify(currentUser));
+    alert("Item added to cart successfully!");
 }
 
 // Function to handle buying now
 function buyNow() {
-    const size = document.getElementById("size").value;
-    const quantity = document.getElementById("quantity").value;
-    alert(`You are buying ${quantity}x size ${size}!`);
+    console.log(!localStorage.getItem("user"));
+    if (!localStorage.getItem("user")) {
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+        return;
+    }
+    else {
+        const size = document.getElementById("size").value;
+        const quantity = document.getElementById("quantity").value;
+        alert(`You are buying ${quantity}x size ${size}!`);
+
+    }
 }
 
 // Function to change the main product image
@@ -328,42 +306,24 @@ function initializeProductPage() {
         img.className = 'figure-img img-fluid rounded zoom';
         const figcaption = document.createElement('figcaption');
         figcaption.className = 'figure-caption';
-        figcaption.innerHTML = `
-            <p>${selectedShoe.name}</p>
-            <p>${selectedShoe.ratings}</p>
-            <p>$${selectedShoe.price.toFixed(2)}</p>
-        `;
+        figcaption.innerHTML = "";
+
+        const namePara = document.createElement("p");
+        namePara.textContent = selectedShoe.name;
+
+        const ratingsPara = document.createElement("p");
+        ratingsPara.textContent = selectedShoe.ratings;
+
+        const pricePara = document.createElement("p");
+        pricePara.textContent = `$${selectedShoe.price.toFixed(2)}`;
+
+        figcaption.appendChild(namePara);
+        figcaption.appendChild(ratingsPara);
+        figcaption.appendChild(pricePara);
         figure.appendChild(img);
         figure.appendChild(figcaption);
         col.appendChild(figure);
         similarItemsContainer.appendChild(col);
     });
 }
-
-// const similarItemsContainer = document.getElementById('similarItemsContainer');
-// similarItems.forEach((imageSrc) => {
-//     const col = document.createElement('div');
-//     col.className = 'col-6 col-md-2';
-//     const figure = document.createElement('figure');
-//     figure.className = 'figure';
-//     const img = document.createElement('img');
-//     img.src = imageSrc;
-//     img.alt = 'Similar Item';
-//     img.className = 'figure-img img-fluid rounded zoom';
-//     const figcaption = document.createElement('figcaption');
-//     figcaption.className = 'figure-caption';
-//     figcaption.innerHTML = `
-//         <p>New Balance</p>
-//         <p>⭐⭐⭐⭐⭐ 36 Ratings</p>
-//         <p>$10</p>
-//     `;
-//     figure.appendChild(img);
-//     figure.appendChild(figcaption);
-//     col.appendChild(figure);
-//     similarItemsContainer.appendChild(col);
-// });
-// }
-
-// Initialize the product page when the DOM is fully loaded
-// document.addEventListener('DOMContentLoaded', initializeProductPage);
 

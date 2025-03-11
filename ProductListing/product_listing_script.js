@@ -26,7 +26,6 @@ const shoes = [
             "/PageDetails/img/newbalance3.webp",
             "/PageDetails/img/newbalance4.webp",
             "/PageDetails/img/newbalance6.webp",
-            "/PageDetails/img/newbalance2.webp",
         ]
     },
     {
@@ -45,7 +44,6 @@ const shoes = [
             "/PageDetails/img/nikeairforce2.png",
             "/PageDetails/img/nikeairforce3.png",
             "/PageDetails/img/nikeairforce4.png",
-            "/PageDetails/img/nikeairforce5.png"
         ]
     },
     {
@@ -64,7 +62,6 @@ const shoes = [
             "/PageDetails/img/adidasultraboost2.avif",
             "/PageDetails/img/adidasultraboost3.jfif",
             "/PageDetails/img/adidasultraboost4.jfif",
-            "/PageDetails/img/adidasultraboost5.vif"
         ]
     },
     {
@@ -83,7 +80,6 @@ const shoes = [
             "/PageDetails/img/pumars2.jfif",
             "/PageDetails/img/pumars3.png",
             "/PageDetails/img/pumars4.jfif",
-            "/PageDetails/img/pumars5.avif"
         ]
     },
     {
@@ -102,7 +98,6 @@ const shoes = [
             "/PageDetails/img/vansoldskool2.jfif",
             "/PageDetails/img/vansoldskool3.jpg",
             "/PageDetails/img/vansoldskool4.jfif",
-            "/PageDetails/img/vansoldskool5.webp"
         ]
     },
     {
@@ -195,35 +190,60 @@ const shoes = [
 
 function loadProducts(category = "All Shoes") {
     const productList = document.getElementById("product-list");
-    let storedShoes = JSON.parse(localStorage.getItem("shoes")) || []; // Get stored shoes
+    let storedShoes = JSON.parse(localStorage.getItem("shoes")) || [];
     let filteredShoes = category === "All Shoes" ? storedShoes : storedShoes.filter(shoe => shoe.category === category);
     let activeCategory = document.getElementById("filtered-category");
-    
+
     productList.innerHTML = "";
+
     filteredShoes.forEach(shoe => {
         let shoeCard = document.createElement("li");
         shoeCard.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-4");
-        shoeCard.innerHTML = `
-                <a href="../PageDetails/prod_det.html?id=${shoe.id}" class="product-card"> 
-                    <div class="shoe-image-container">
-                        <img class="img-fluid w-100" src="${shoe.img}" alt="${shoe.name}" >
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between py-3 gap-2">
-                        <div class="shoe-name-container"> 
-                            <h6>${shoe.name}</h6>
-                        </div>
-                        <div class="shoe-price-container">
-                            <p>$${shoe.price}</p>
-                        </div>
-                    </div>
-                </a>
-        `;
+
+        let link = document.createElement("a");
+        link.href = `../PageDetails/prod_det.html?id=${shoe.id}`;
+        link.classList.add("product-card");
+
+        let imgContainer = document.createElement("div");
+        imgContainer.classList.add("shoe-image-container");
+
+        let img = document.createElement("img");
+        img.classList.add("img-fluid", "w-100");
+        img.src = shoe.img;
+        img.alt = shoe.name;
+
+        imgContainer.appendChild(img);
+
+        let infoContainer = document.createElement("div");
+        infoContainer.classList.add("d-flex", "align-items-center", "justify-content-between", "py-3", "gap-2");
+
+        let nameContainer = document.createElement("div");
+        nameContainer.classList.add("shoe-name-container");
+
+        let name = document.createElement("h6");
+        name.textContent = shoe.name;
+
+        nameContainer.appendChild(name);
+
+        let priceContainer = document.createElement("div");
+        priceContainer.classList.add("shoe-price-container");
+
+        let price = document.createElement("p");
+        price.textContent = `$${shoe.price}`;
+
+        priceContainer.appendChild(price);
+
+        infoContainer.appendChild(nameContainer);
+        infoContainer.appendChild(priceContainer);
+
+        link.appendChild(imgContainer);
+        link.appendChild(infoContainer);
+        shoeCard.appendChild(link);
         productList.appendChild(shoeCard);
     });
 
     activeCategory.innerText = category;
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".product-card").forEach(link => {
@@ -245,16 +265,20 @@ function setupCategoryFilters() {
 function setupEventListeners() {
     document.getElementById("login-btn").addEventListener("click", () => {
         const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-        loginModal.show(); 
+        loginModal.show();
     });
-    document.getElementById("signup-btn").addEventListener("click", showSignup);
+    // document.getElementById("signup-btn").addEventListener("click", showSignup);
     document.getElementById("logout-btn").addEventListener("click", logout);
-    /* Added login form */
+
     document.getElementById("loginForm").addEventListener("submit", (event) => {
         event.preventDefault();
-        const user = document.getElementById("usernameInput").value;
+        const user = {
+            name: document.getElementById("usernameInput").value,
+            cart: []
+        };
+
         if (user) {
-            localStorage.setItem("user", user);
+            localStorage.setItem("user", JSON.stringify(user));
             checkUserLogin();
             const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
             loginModal.hide();
@@ -262,28 +286,12 @@ function setupEventListeners() {
     });
 }
 
-function showLogin() {
-    let user = prompt("Enter username:");
-    if (user) {
-        localStorage.setItem("user", user);
-        checkUserLogin();
-    }
-}
-
-function showSignup() {
-    let user = prompt("Enter new username:");
-    if (user) {
-        localStorage.setItem("user", user);
-        checkUserLogin();
-    }
-}
-
 function checkUserLogin() {
-    let user = localStorage.getItem("user");
+    let user = JSON.parse(localStorage.getItem("user"));
     if (user) {
         document.getElementById("auth-buttons").classList.add("d-none");
         document.getElementById("user-info").classList.remove("d-none");
-        document.getElementById("username").innerText = user;
+        document.getElementById("username").innerText = user.name;
     }
 }
 
