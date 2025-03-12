@@ -1,6 +1,11 @@
 body {
     background-color: #f8f9fa;
+    
 }
+/* 
+*{
+    border: 1px dotted red;
+} */
 
 /* Navbar profile image s*/
 .profile-img {
@@ -9,15 +14,19 @@ body {
     height: 40px;
 }
 
-
-.product-image {
-    width: 100%;
-    height: auto;
+#mainProductImageContainer {
+    height: 300px;
 }
+
+/* .product-image {
+    width: 40%;
+    margin-left: 30%;
+} */
 
 .thumbnail-image {
     width: 100%;
-    height: auto;
+    height: 90%;
+    object-fit: cover;
 }
 
 .product-details {

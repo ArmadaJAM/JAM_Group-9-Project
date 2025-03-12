@@ -3,10 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("shoes", JSON.stringify(shoes));
     }
     loadProducts();
-    checkUserLogin();
     setupEventListeners();
     setupCategoryFilters();
-
+    checkUserLogin();
 });
 
 const shoes = [
