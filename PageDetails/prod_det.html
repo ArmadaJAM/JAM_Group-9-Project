@@ -44,25 +44,27 @@
     </nav> -->
 
     <div class="container mt-3 d-flex justify-content-between align-items-center">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/ProductListing/product_listing.html">
+                        <!-- Home Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                            <path d="M8 .5l-8 8V15a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V8.5l-8-8zM7.293 1.5L2 6.793V14h3V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v5h3V6.793L8.707 1.5H8h-.707z"/>
+                        </svg>
+                        < Product List
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Sidebar -->
         <input type="text" class="form-control w-75" id="search" placeholder="Search shoes...">
         <a href="cart.html" class="btn btn-warning ms-3" id="cart-link">Cart (0)</a>
     </div>
 
     <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/ProductListing/product_listing.html">
-                            <!-- Home Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                                <path d="M8 .5l-8 8V15a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V8.5l-8-8zM7.293 1.5L2 6.793V14h3V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v5h3V6.793L8.707 1.5H8h-.707z"/>
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+        <div class="row justify-content-center">
+            
 
             <!-- Main content -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -163,6 +165,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="prod_det_script.js"></script>
+    <script type="module" src="prod_det_script.js" defer></script>
 </body>
 </html>
