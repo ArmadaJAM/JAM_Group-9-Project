@@ -188,7 +188,10 @@ const shoes = [
     },
 ];
 
-function loadProducts(category = "All Shoes") {
+let currentPage = 1;
+const itemsPerPage = 6;
+
+function loadProducts(category = "All Shoes", page = 1) {
     const productList = document.getElementById("product-list");
     let storedShoes = JSON.parse(localStorage.getItem("shoes")) || [];
     let filteredShoes = category === "All Shoes" ? storedShoes : storedShoes.filter(shoe => shoe.category === category);
@@ -196,7 +199,11 @@ function loadProducts(category = "All Shoes") {
 
     productList.innerHTML = "";
 
-    filteredShoes.forEach(shoe => {
+    let start = (page - 1) * itemsPerPage;
+    let end = start + itemsPerPage;
+    let paginatedShoes = filteredShoes.slice(start, end);
+
+    paginatedShoes.forEach(shoe => {
         let shoeCard = document.createElement("li");
         shoeCard.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-4");
 
@@ -229,7 +236,7 @@ function loadProducts(category = "All Shoes") {
         priceContainer.classList.add("shoe-price-container");
 
         let price = document.createElement("p");
-        price.textContent = `$${shoe.price}`;
+        price.textContent = `₱${shoe.price}`;
 
         priceContainer.appendChild(price);
 
@@ -243,6 +250,7 @@ function loadProducts(category = "All Shoes") {
     });
 
     activeCategory.innerText = category;
+    createPaginationButtons(filteredShoes.length, category);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -311,3 +319,25 @@ document.querySelectorAll(".product-card").forEach(link => {
         window.location.href = "prod_det.html";
     });
 });
+
+function createPaginationButtons(totalItems, category) {
+    const paginationContainer = document.getElementById("pagination");
+    paginationContainer.innerHTML = "";
+
+    let totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    for (let i = 1; i <= totalPages; i++) {
+        let pageButton = document.createElement("button");
+        pageButton.classList.add("btn", "btn-light", "mx-1");
+        pageButton.textContent = i;
+        if (i === currentPage) pageButton.classList.add("btn-primary");
+
+        pageButton.addEventListener("click", () => {
+            currentPage = i;
+            loadProducts(category, currentPage);
+        });
+
+        paginationContainer.appendChild(pageButton);
+    }
+}
+
