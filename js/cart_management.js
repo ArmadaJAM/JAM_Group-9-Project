@@ -44,3 +44,4 @@ export function buyNow(selectedShoe) {
     const quantity = document.getElementById("quantity").value;
     alert(`You are buying ${quantity}x size ${size}!`);
 }
+

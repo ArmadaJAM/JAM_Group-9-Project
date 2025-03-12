@@ -35,46 +35,8 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", loadCart);
-
-        function loadCart() {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartItems = document.getElementById("cart-items");
-            const cartCount = document.getElementById("cart-count");
-            const cartTotal = document.getElementById("cart-total");
-            const checkoutBtn = document.getElementById("checkout-btn");
-
-            cartItems.innerHTML = cart.length === 0 ? '<li class="list-group-item text-center">Your cart is empty.</li>' : "";
-
-            let totalPrice = 0;
-            let totalQuantity = 0;
-
-            cart.forEach((item, index) => {
-                const li = document.createElement("li");
-                li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-                li.innerHTML = `
-                    <img src="${item.img}" alt="${item.name}" class="img-thumbnail me-3" style="width: 50px; height: 50px;">
-                    <span><strong>${item.name}</strong> - $${item.price} x ${item.quantity}</span>
-                    <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button>
-                `;
-                cartItems.appendChild(li);
-                totalPrice += item.price * item.quantity;
-                totalQuantity += item.quantity;
-            });
-
-            cartCount.textContent = totalQuantity;
-            cartTotal.textContent = totalPrice.toFixed(2);
-            checkoutBtn.disabled = cart.length === 0;
-        }
-
-        function removeFromCart(index) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.splice(index, 1);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            loadCart();
-        }
-    </script>
+    <script src="product_cart.js" defer></script>
+    
 
 </body>
 </html>

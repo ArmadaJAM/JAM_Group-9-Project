@@ -53,3 +53,34 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
+.testimonials {
+    background: black;
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.contact-section {
+    padding: 30px 0;
+    background: #f8f9fa;
+    width: 100%;
+
+}
+
+.contact-section p {
+    color: black;
+}
+
+section.container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
