@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.product-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.product-card:hover {
+    background-color: #f8f9fa;
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 7px;
+    transition: 0.5s all ease-in-out;
+    overflow: hidden;
+}
+
+.shoe-image-container {
+    overflow: hidden;
+    height: 250px;
+}
+
+.shoe-image-container:hover img {
+    transform: scale(1.25);
+}
+
+li,
+li a {
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
