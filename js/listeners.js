@@ -17,3 +17,4 @@ export function setupEventListeners() {
     document.getElementById("loginForm").addEventListener("submit", handleLogin);
     document.getElementById("signupForm").addEventListener("submit", handleSignup);
 }
+

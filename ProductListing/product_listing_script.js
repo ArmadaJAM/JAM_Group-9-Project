@@ -4,6 +4,7 @@ import { checkUserLogin } from "../js/auth.js";
 import { loadProducts } from "../js/product_loading.js";
 import { updateCartNum } from "../js/cart_management.js";
 
+
 document.addEventListener("DOMContentLoaded", () => {
     // Store shoe data in localStorage if not already present
     if (!localStorage.getItem("shoes")) {
@@ -11,12 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
     }
 
-    loadProducts();
-    setupEventListeners();
-    setupCategoryFilters();
     checkUserLogin();
-    initializeProductPage();
+    setupEventListeners();
+    updateCartNum();
+    loadProducts();
+    setupCategoryFilters();
     setupSearchFunctionality();
+    initializeProductPage();
 
     // Ensure product card links have consistent styling
     document.querySelectorAll(".product-card").forEach(link => {
@@ -33,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = `/PageDetails/prod_det.html?id=${productId}`;
         });
     });
-    updateCartNum();
 });
 
 function setupCategoryFilters() {

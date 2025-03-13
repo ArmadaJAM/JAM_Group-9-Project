@@ -49,9 +49,16 @@ export function handleLogin(event) {
     passwordInput.value = "";
 
     const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-    loginModal.hide();
-}
+    if (loginModal) {
+        loginModal.hide();
+    }
 
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+
+    if (!document.querySelector('.modal.show')) {
+        document.body.style.overflow = "";
+    }
+}
 
 // Function to handle user signup
 export function handleSignup(event) {
@@ -96,8 +103,17 @@ export function handleSignup(event) {
     confirmPasswordInput.value = "";
 
     const signupModal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
-    signupModal.hide();
+    if (signupModal) {
+        signupModal.hide();
+    }
+
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+
+    if (!document.querySelector('.modal.show')) {
+        document.body.style.overflow = "";
+    }
 }
+
 
 
 // export function showSignup() {

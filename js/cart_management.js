@@ -52,13 +52,15 @@ export function buyNow(selectedShoe) {
 
 export function updateCartNum() {
     let currentUser = JSON.parse(localStorage.getItem("user"));
+    if(!(window.location.pathname.endsWith("index.html") || window.location.pathname === "/")){
+        if (currentUser && currentUser.cart) {
+            // const totalItems = currentUser.cart.reduce((total, item) => total + item.quantity, 0);
+            console.log(currentUser.cart.length);
+            document.getElementById('cart-num').innerText = currentUser.cart.length;
+        } else {
+            document.getElementById('cart-num').innerText = 0;
+        }
 
-    if (currentUser && currentUser.cart) {
-        // const totalItems = currentUser.cart.reduce((total, item) => total + item.quantity, 0);
-        console.log(currentUser.cart.length);
-        document.getElementById('cart-num').innerText = currentUser.cart.length;
-    } else {
-        document.getElementById('cart-num').innerText = 0;
     }
 
 }
