@@ -11,14 +11,23 @@ export function checkUserLogin() {
 }
 
 export function logout() {
-    localStorage.removeItem("user");
-    document.getElementById("auth-buttons").classList.remove("d-none");
-    document.getElementById("user-info").classList.add("d-none");
-    if(!JSON.parse(localStorage.getItem("user"))){
-        updateCartNum();
-    }
+    const logoutModal = new bootstrap.Modal(document.getElementById('logoutConfirmModal'));
+    logoutModal.show();
 
+    document.getElementById("confirmLogoutBtn").addEventListener("click", function () {
+        localStorage.removeItem("user");
+        document.getElementById("auth-buttons").classList.remove("d-none");
+        document.getElementById("user-info").classList.add("d-none");
+
+        if (!JSON.parse(localStorage.getItem("user"))) {
+            updateCartNum();
+        }
+
+        // Close the modal after logout
+        logoutModal.hide();
+    });
 }
+
 
 // Function to handle user login
 export function handleLogin(event) {

@@ -34,9 +34,18 @@ export function addToCart(selectedShoe) {
 
     localStorage.setItem("user", JSON.stringify(currentUser));
 
-    alert("Item added to cart successfully!");
+    // Show success modal
+    const successModal = new bootstrap.Modal(document.getElementById('cartSuccessModal'));
+    successModal.show();
+
+    // Hide the modal automatically after 1 second
+    setTimeout(() => {
+        successModal.hide();
+    }, 1000);
+
     updateCartNum();
 }
+
 
 export function buyNow(selectedShoe) {
     if (!localStorage.getItem("user")) {

@@ -5,110 +5,61 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-}
-
-main {
-    min-height: 100vh;
-}
-
-.list-group-item {
-    cursor: pointer;
-}
-
-.list-group-item:hover {
-    background-color: #f8f9fa;
-}
-
-/* .product-card {
-    
-    
-    display: block;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 7px;
-    text-align: center;
-    transition: 0.3s;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    /* height: 300px; 
-} */
-
-.product-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    height: 100%; 
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 7px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    transition: 0.3s;
-    overflow: hidden;
-}
-
-.product-card:hover {
-    background-color: #f8f9fa;
-}
-
-.product-card img {
+    font-family: 'Poppins', sans-serif;
     width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 7px;
-    transition: 0.5s all ease-in-out;
-    overflow: hidden;
+    background-color: #121212 !important;
+    color: #B0B0B0;
 }
 
-.shoe-image-container {
-    overflow: hidden;
-    height: 250px;
+.navbar, 
+#collection, 
+.testimonials {
+    background: #1A1A1A;
+    color: white;
 }
 
-.shoe-image-container:hover img {
-    transform: scale(1.25);
+h1, h2, h5 {
+    color: white !important;
 }
 
-.price {
-    background-color: rgb(167, 167, 167);
+p {
+    color: #B0B0B0;
+}
+
+#search-container #cart-btn {
+    background-color: transparent ;
+    color: white;
+    font-weight: bolder;
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 15px 20px;
+}
+
+.navbar-brand {
     color: white;
     font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 16px;
-    display: inline-block;
-    text-align: center;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-li,
-li a {
-    list-style: none;
-    text-decoration: none;
-    color: black;
+.navbar-toggler {
+    border-color: white;
 }
 
-.testimonials {
-    background: black;
+.navbar-nav .nav-link {
+    color: #B0B0B0;
+}
+
+#auth-buttons .btn {
+    background-color: #3A3A3A;
     color: white;
-    padding: 60px 0;
-    text-align: center;
-    width: 100%;
+    border: none;
 }
 
-.contact-section {
-    padding: 30px 0;
-    background: #f8f9fa;
-    width: 100%;
-
-}
-
-.contact-section p {
-    color: black;
+#auth-buttons .btn:hover {
+    background-color: #505050;
 }
 
 .container {
@@ -121,4 +72,114 @@ li a {
 .row {
     margin-left: 0;
     margin-right: 0;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    background-color: #1F1F1F;
+    border: 1px solid #373737;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    background-color: #292929;
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 7px;
+    transition: 0.5s all ease-in-out;
+}
+
+.shoe-image-container {
+    overflow: hidden;
+    height: 250px;
+}
+
+.shoe-image-container:hover img {
+    transform: scale(1.25);
+}
+
+.shoe-name-container h6 {
+    color: white;
+}
+
+.price {
+    background-color: #505050;
+    color: white;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.list-group {
+    display: flex;
+    gap: 50px;
+}
+
+.list-group-item.category-item {
+    cursor: pointer;
+    background-color: #2B2B2B;
+    color: white;
+    border-radius: 10px;
+}
+
+.list-group-item:hover.category-item {
+    background-color: #505050;
+}
+
+.list-group-item.active {
+    background-color: #808080;
+    color: white;
+}
+
+.testimonials {
+    padding: 60px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.testimonials .col-md-3 {
+    /* background: #2B2B2B; */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.contact-section {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.contact-section p {
+    color: white;
+}
+
+.btn-custom {
+    background: #3A3A3A;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border: none;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.btn-custom:hover {
+    background-color: #505050;
 }

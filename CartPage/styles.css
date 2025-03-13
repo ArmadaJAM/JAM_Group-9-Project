@@ -1,59 +1,90 @@
+/* Monochrome Theme */
 body {
-    background-color: #f8f9fa;
+    background-color: #1A1A1A; /* Dark background */
+    color: #E0E0E0; /* Light gray text */
+}
+
+h2, h4, strong {
+    color: white;
+}
+
+/* Shopping Cart Items */
+.list-group-item {
+    background-color: #262626;
+    border-color: #333;
+    color: white;
+}
+
+/* Order Summary */
+.card {
+    background-color: #262626;
+    border: 1px solid #333;
+    color: white;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #444;
+    border-color: #666;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #666;
+    border-color: #888;
+}
+
+.btn-outline-dark {
+    border-color: white;
+    color: white;
+}
+
+.btn-outline-dark:hover {
+    background-color: white;
+    color: #1A1A1A;
+}
+
+/* Modal */
+.checkout-modal .modal-content {
+    background-color: #1A1A1A;
+    color: white;
+    border: 1px solid #444;
 }
 
 .checkout-modal .modal-header,
-.checkout-modal .modal-body,
 .checkout-modal .modal-footer {
-    padding: 2rem;
+    background-color: #222;
+    border-bottom: 1px solid #333;
 }
 
-.checkout-modal .modal-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.checkout-modal .total-amount {
-    text-align: right;
-    margin-top: 1rem;
-}
-
-.checkout-modal .btn {
-    width: 100%;
-}
-
-.form-group {
-    position: relative;
-    margin-bottom: 1.5rem;
-}
-
-.form-group input:focus + label,
-.form-group input:not(:placeholder-shown) + label {
-    top: -1.5rem;
-    left: 0;
-    font-size: 0.75rem;
-    color: #6c757d;
-}
-
-.form-group label {
-    position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    transition: all 0.2s;
-    pointer-events: none;
-    font-size: 1rem;
-    color: #6c757d;
-}
-
+/* Input Fields */
 .form-control {
-    padding-top: 1.5rem;
+    background-color: #333;
+    border: 1px solid #444;
+    color: white;
 }
 
-.product .price {
-    font-weight: bold;
+.form-control::placeholder {
+    color: #bbb;
 }
 
+.form-control:focus {
+    background-color: #444;
+    border-color: white;
+    color: white;
+}
+
+/* Labels */
+.form-group label {
+    color: #bbb;
+}
+
+/* Payment Logos */
 .logo {
-    width: 50px;
-    height: auto;
+    filter: grayscale(100%);
+}
+
+/* Price Styling */
+.price {
+    color: #ccc;
 }
