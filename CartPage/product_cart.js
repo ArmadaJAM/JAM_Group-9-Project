@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", loadCart);
 
-document.getElementById("checkout-btn").addEventListener("click", populateCheckoutItems);
+// Added event listener to validate and populate checkout items when checkout button is clicked
+document.getElementById("checkout-btn").addEventListener("click", validateShippingInfo);
+
+// Added event listener for the "Use same information for Billing" checkbox
+document.getElementById("same-as-shipping").addEventListener("change", toggleBillingInfo);
 
 function loadCart() {
     let currentUser = JSON.parse(localStorage.getItem("user"));
@@ -18,7 +22,7 @@ function loadCart() {
     const cartTotal = document.getElementById("cart-total");
     const checkoutBtn = document.getElementById("checkout-btn");
 
-    cartItems.innerHTML = ""; 
+    cartItems.innerHTML = "";  // Clear previous items
     let totalPrice = 0;
     let totalQuantity = 0;
 
@@ -40,6 +44,8 @@ function loadCart() {
     cartCount.textContent = totalQuantity;
     cartTotal.textContent = totalPrice.toFixed(2);
     checkoutBtn.disabled = false;
+
+    document.getElementById("total-amount").textContent = (totalPrice + 5).toFixed(2);
 }
 
 function removeFromCart(index) {
@@ -53,7 +59,43 @@ function removeFromCart(index) {
     loadCart();
 }
 
-// Function to populate checkout items in the modal and update the total amount
+// Function to validate shipping information before proceeding to checkout
+function validateShippingInfo() {
+    const shippingFirstName = document.getElementById('shipping-first-name').value;
+    const shippingLastName = document.getElementById('shipping-last-name').value;
+    const shippingAddress1 = document.getElementById('shipping-address-1').value;
+    const shippingAddress2 = document.getElementById('shipping-address-2').value;
+    const shippingCity = document.getElementById('shipping-city').value;
+    const shippingState = document.getElementById('shipping-state').value;
+    const shippingZip = document.getElementById('shipping-zip').value;
+
+    if (shippingFirstName && shippingLastName && shippingAddress1 && shippingCity && shippingState && shippingZip) {
+        // If all shipping information is filled out, proceed to populate checkout items
+        populateCheckoutItems();
+        // Show the checkout modal
+        const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+        checkoutModal.show();
+    } else {
+        alert('Please fill in all the shipping information.');
+    }
+}
+
+// Function to toggle billing information fields based on the checkbox state
+function toggleBillingInfo() {
+    const useSameAsShipping = document.getElementById('same-as-shipping').checked;
+    const billingFields = document.querySelectorAll('#billing-form .form-control');
+
+    billingFields.forEach(field => {
+        if (useSameAsShipping) {
+            field.disabled = true;
+            field.value = '';
+        } else {
+            field.disabled = false;
+        }
+    });
+}
+
+
 function populateCheckoutItems() {
     let currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -69,16 +111,17 @@ function populateCheckoutItems() {
         totalPrice += item.price * item.quantity;
     });
 
-    checkoutTotal.textContent = `$${totalPrice.toFixed(2)}`;
+    checkoutTotal.textContent = `$${(totalPrice + 5).toFixed(2)}`;  // Including shipping fee
 }
 
-// Function to process payment, validate the form fields, clear the cart and close the modal
+
 function processPayment() {
     const cardHolder = document.getElementById('card-holder').value;
     const cardNumber = document.getElementById('card-number').value;
     const expirationDate = document.getElementById('expiration-date').value;
     const cvc = document.getElementById('cvc').value;
 
+    
     if (cardHolder && cardNumber && expirationDate && cvc) {
         alert('Payment processed successfully!');
         
@@ -87,12 +130,17 @@ function processPayment() {
         currentUser.cart = [];
         localStorage.setItem("user", JSON.stringify(currentUser));
 
-        // Refresh the cart display
+        
         loadCart();
 
         // Close the modal
         const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
         checkoutModal.hide();
+        
+        // Reload the page after a short delay to ensure the modal is closed
+        setTimeout(() => {
+            location.reload();
+        }, 500);
     } else {
         alert('Please fill in all the fields.');
     }

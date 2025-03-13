@@ -81,10 +81,39 @@ h2, h4, strong {
 
 /* Payment Logos */
 .logo {
-    filter: grayscale(100%);
+    width: 50px;
+    height: auto;
 }
 
 /* Price Styling */
 .price {
     color: #ccc;
+}
+
+/* Additional CSS for form interaction */
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    top: -1.5rem;
+    left: 0;
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.form-group label {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    transition: all 0.2s;
+    pointer-events: none;
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+.form-control {
+    padding-top: 1.5rem;
 }
