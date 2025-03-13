@@ -8,6 +8,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+main {
+    min-height: 100vh;
+}
+
 .list-group-item {
     cursor: pointer;
 }

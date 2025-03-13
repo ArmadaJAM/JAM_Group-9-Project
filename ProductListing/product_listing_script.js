@@ -55,7 +55,7 @@ function setupCategoryFilters() {
 // Function of search 
 function setupSearchFunctionality() {
     const searchInput = document.getElementById('search');
-    const searchButton = document.getElementById('search-button');
+    // const searchButton = document.getElementById('search-button');
 
     function performSearch() {
         const query = searchInput.value.toLowerCase();
@@ -71,7 +71,7 @@ function setupSearchFunctionality() {
     }
 
     searchInput.addEventListener('input', performSearch);
-    searchButton.addEventListener('click', performSearch);
+    // searchButton.addEventListener('click', performSearch);
 }
 
 
