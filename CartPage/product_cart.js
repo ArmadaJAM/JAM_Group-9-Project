@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", loadCart);
-
 document.getElementById("checkout-btn").addEventListener("click", populateCheckoutItems);
 
 function loadCart() {
@@ -28,8 +27,13 @@ function loadCart() {
 
         li.innerHTML = `
             <img src="${item.img}" alt="${item.name}" class="img-thumbnail me-3" style="width: 50px; height: 50px;">
-            <span><strong>${item.name}</strong> - $${item.price} x ${item.quantity}</span>
-            <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button>
+            <span><strong>${item.name}</strong> - $${item.price}</span>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-secondary btn-sm me-2" onclick="decreaseQuantity(${index})">-</button>
+                <span id="quantity-${index}" class="me-2">${item.quantity}</span>
+                <button class="btn btn-secondary btn-sm me-2" onclick="increaseQuantity(${index})">+</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmRemoveFromCart(${index})">Remove</button>
+            </div>
         `;
 
         cartItems.appendChild(li);
@@ -42,6 +46,46 @@ function loadCart() {
     checkoutBtn.disabled = false;
 }
 
+function increaseQuantity(index) {
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!currentUser || !currentUser.cart) return;
+
+    currentUser.cart[index].quantity += 1;
+    localStorage.setItem("user", JSON.stringify(currentUser));
+    loadCart();
+}
+
+function decreaseQuantity(index) {
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!currentUser || !currentUser.cart) return;
+
+    if (currentUser.cart[index].quantity > 1) {
+        currentUser.cart[index].quantity -= 1;
+    } else {
+        confirmRemoveFromCart(index);
+    }
+
+    localStorage.setItem("user", JSON.stringify(currentUser));
+    loadCart();
+}
+
+let removeIndex = null;
+
+function confirmRemoveFromCart(index) {
+    removeIndex = index;
+    let modal = new bootstrap.Modal(document.getElementById('removeConfirmModal'));
+    modal.show();
+}
+
+document.getElementById("confirmRemoveBtn").addEventListener("click", function () {
+    if (removeIndex !== null) {
+        removeFromCart(removeIndex);
+        removeIndex = null;
+    }
+});
+
 function removeFromCart(index) {
     let currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -53,7 +97,6 @@ function removeFromCart(index) {
     loadCart();
 }
 
-// Function to populate checkout items in the modal and update the total amount
 function populateCheckoutItems() {
     let currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -72,7 +115,6 @@ function populateCheckoutItems() {
     checkoutTotal.textContent = `$${totalPrice.toFixed(2)}`;
 }
 
-// Function to process payment, validate the form fields, clear the cart and close the modal
 function processPayment() {
     const cardHolder = document.getElementById('card-holder').value;
     const cardNumber = document.getElementById('card-number').value;
@@ -82,18 +124,16 @@ function processPayment() {
     if (cardHolder && cardNumber && expirationDate && cvc) {
         alert('Payment processed successfully!');
         
-        // Clear the cart
         let currentUser = JSON.parse(localStorage.getItem("user"));
         currentUser.cart = [];
         localStorage.setItem("user", JSON.stringify(currentUser));
 
-        // Refresh the cart display
         loadCart();
 
-        // Close the modal
         const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
         checkoutModal.hide();
     } else {
         alert('Please fill in all the fields.');
     }
 }
+
