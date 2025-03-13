@@ -75,8 +75,8 @@ export function handleSignup(event) {
 
     const firstNameInput = document.getElementById("firstName");
     const lastNameInput = document.getElementById("lastName");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
+    const emailInput = document.getElementById("SUusernameInput");
+    const passwordInput = document.getElementById("SUpassInput");
     const confirmPasswordInput = document.getElementById("confirmPassword");
 
     const firstName = firstNameInput.value.trim();
