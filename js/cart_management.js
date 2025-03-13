@@ -31,6 +31,9 @@ export function addToCart(selectedShoe) {
 
     localStorage.setItem("user", JSON.stringify(currentUser));
     alert("Item added to cart successfully!");
+
+    updateCartNum();
+
 }
 
 export function buyNow(selectedShoe) {
@@ -45,3 +48,15 @@ export function buyNow(selectedShoe) {
     alert(`You are buying ${quantity}x size ${size}!`);
 }
 
+export function updateCartNum() {
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+
+    if (currentUser && currentUser.cart) {
+        // const totalItems = currentUser.cart.reduce((total, item) => total + item.quantity, 0);
+        console.log(currentUser.cart.length);
+        document.getElementById('cart-num').innerText = currentUser.cart.length;
+    } else {
+        document.getElementById('cart-num').innerText = 0;
+    }
+
+}

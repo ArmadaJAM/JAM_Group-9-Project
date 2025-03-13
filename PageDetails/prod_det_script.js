@@ -1,11 +1,12 @@
 import { checkUserLogin, logout, handleLogin } from "../js/auth.js";
 import { getSelectedProduct, selectedShoe, displayProductDetails } from "../js/product_loading.js";
 import { setupEventListeners } from "../js/listeners.js";
-
+import { updateCartNum } from "../js/cart_management.js";
 document.addEventListener("DOMContentLoaded", () => {
     checkUserLogin();
     setupEventListeners();
     getSelectedProduct();
+    updateCartNum();
 });
 
 // function setupEventListeners() {

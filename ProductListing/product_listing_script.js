@@ -2,6 +2,7 @@ import { shoes } from "../js/productData.js";
 import { setupEventListeners } from "../js/listeners.js";
 import { checkUserLogin } from "../js/auth.js";
 import { loadProducts } from "../js/product_loading.js";
+import { updateCartNum } from "../js/cart_management.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     // Store shoe data in localStorage if not already present
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = `/PageDetails/prod_det.html?id=${productId}`;
         });
     });
+    updateCartNum();
 });
 
 function setupCategoryFilters() {
