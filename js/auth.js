@@ -1,9 +1,12 @@
+import { updateCartNum } from "./cart_management.js";
+
 export function checkUserLogin() {
     let user = JSON.parse(localStorage.getItem("user"));
     if (user) {
         document.getElementById("auth-buttons").classList.add("d-none");
         document.getElementById("user-info").classList.remove("d-none");
         document.getElementById("username").innerText = `${user.firstName} ${user.lastName}`;
+        updateCartNum();
     }
 }
 
@@ -11,6 +14,10 @@ export function logout() {
     localStorage.removeItem("user");
     document.getElementById("auth-buttons").classList.remove("d-none");
     document.getElementById("user-info").classList.add("d-none");
+    if(!JSON.parse(localStorage.getItem("user"))){
+        updateCartNum();
+    }
+
 }
 
 // Function to handle user login
@@ -31,6 +38,10 @@ export function handleLogin(event) {
         return;
     }
 
+    if (!existingUser.cart) {
+        existingUser.cart = [];
+    }
+
     localStorage.setItem("user", JSON.stringify(existingUser));
     checkUserLogin();
 
@@ -40,6 +51,7 @@ export function handleLogin(event) {
     const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
     loginModal.hide();
 }
+
 
 // Function to handle user signup
 export function handleSignup(event) {
@@ -70,7 +82,7 @@ export function handleSignup(event) {
         return;
     }
 
-    const newUser = { firstName, lastName, email, password };
+    const newUser = { firstName, lastName, email, password, cart: [] };
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
 

@@ -1,6 +1,5 @@
 export function addToCart(selectedShoe) {
     let currentUser = JSON.parse(localStorage.getItem("user"));
-
     if (!currentUser) {
         const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
         loginModal.show();
@@ -29,11 +28,14 @@ export function addToCart(selectedShoe) {
         currentUser.cart.push(newItem);
     }
 
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    users = users.map(user => user.email === currentUser.email ? currentUser : user);
+    localStorage.setItem("users", JSON.stringify(users));
+
     localStorage.setItem("user", JSON.stringify(currentUser));
+
     alert("Item added to cart successfully!");
-
     updateCartNum();
-
 }
 
 export function buyNow(selectedShoe) {
