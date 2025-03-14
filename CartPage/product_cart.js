@@ -1,10 +1,5 @@
 document.addEventListener("DOMContentLoaded", loadCart);
-
-// Added event listener to validate and populate checkout items when checkout button is clicked
-document.getElementById("checkout-btn").addEventListener("click", validateShippingInfo);
-
-// Added event listener for the "Use same information for Billing" checkbox
-document.getElementById("same-as-shipping").addEventListener("change", toggleBillingInfo);
+document.getElementById("checkout-btn").addEventListener("click", populateCheckoutItems);
 
 function loadCart() {
     let currentUser = JSON.parse(localStorage.getItem("user"));
@@ -32,8 +27,13 @@ function loadCart() {
 
         li.innerHTML = `
             <img src="${item.img}" alt="${item.name}" class="img-thumbnail me-3" style="width: 50px; height: 50px;">
-            <span><strong>${item.name}</strong> - $${item.price} x ${item.quantity}</span>
-            <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button>
+            <span><strong>${item.name}</strong> - $${item.price}</span>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-secondary btn-sm me-2" onclick="decreaseQuantity(${index})">-</button>
+                <span id="quantity-${index}" class="me-2">${item.quantity}</span>
+                <button class="btn btn-secondary btn-sm me-2" onclick="increaseQuantity(${index})">+</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmRemoveFromCart(${index})">Remove</button>
+            </div>
         `;
 
         cartItems.appendChild(li);
@@ -48,6 +48,46 @@ function loadCart() {
     document.getElementById("total-amount").textContent = (totalPrice + 5).toFixed(2);
 }
 
+function increaseQuantity(index) {
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!currentUser || !currentUser.cart) return;
+
+    currentUser.cart[index].quantity += 1;
+    localStorage.setItem("user", JSON.stringify(currentUser));
+    loadCart();
+}
+
+function decreaseQuantity(index) {
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!currentUser || !currentUser.cart) return;
+
+    if (currentUser.cart[index].quantity > 1) {
+        currentUser.cart[index].quantity -= 1;
+    } else {
+        confirmRemoveFromCart(index);
+    }
+
+    localStorage.setItem("user", JSON.stringify(currentUser));
+    loadCart();
+}
+
+let removeIndex = null;
+
+function confirmRemoveFromCart(index) {
+    removeIndex = index;
+    let modal = new bootstrap.Modal(document.getElementById('removeConfirmModal'));
+    modal.show();
+}
+
+document.getElementById("confirmRemoveBtn").addEventListener("click", function () {
+    if (removeIndex !== null) {
+        removeFromCart(removeIndex);
+        removeIndex = null;
+    }
+});
+
 function removeFromCart(index) {
     let currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -58,43 +98,6 @@ function removeFromCart(index) {
 
     loadCart();
 }
-
-// Function to validate shipping information before proceeding to checkout
-function validateShippingInfo() {
-    const shippingFirstName = document.getElementById('shipping-first-name').value;
-    const shippingLastName = document.getElementById('shipping-last-name').value;
-    const shippingAddress1 = document.getElementById('shipping-address-1').value;
-    const shippingAddress2 = document.getElementById('shipping-address-2').value;
-    const shippingCity = document.getElementById('shipping-city').value;
-    const shippingState = document.getElementById('shipping-state').value;
-    const shippingZip = document.getElementById('shipping-zip').value;
-
-    if (shippingFirstName && shippingLastName && shippingAddress1 && shippingCity && shippingState && shippingZip) {
-        // If all shipping information is filled out, proceed to populate checkout items
-        populateCheckoutItems();
-        // Show the checkout modal
-        const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
-        checkoutModal.show();
-    } else {
-        alert('Please fill in all the shipping information.');
-    }
-}
-
-// Function to toggle billing information fields based on the checkbox state
-function toggleBillingInfo() {
-    const useSameAsShipping = document.getElementById('same-as-shipping').checked;
-    const billingFields = document.querySelectorAll('#billing-form .form-control');
-
-    billingFields.forEach(field => {
-        if (useSameAsShipping) {
-            field.disabled = true;
-            field.value = '';
-        } else {
-            field.disabled = false;
-        }
-    });
-}
-
 
 function populateCheckoutItems() {
     let currentUser = JSON.parse(localStorage.getItem("user"));
@@ -114,7 +117,6 @@ function populateCheckoutItems() {
     checkoutTotal.textContent = `$${(totalPrice + 5).toFixed(2)}`;  // Including shipping fee
 }
 
-
 function processPayment() {
     const cardHolder = document.getElementById('card-holder').value;
     const cardNumber = document.getElementById('card-number').value;
@@ -125,15 +127,12 @@ function processPayment() {
     if (cardHolder && cardNumber && expirationDate && cvc) {
         alert('Payment processed successfully!');
         
-        // Clear the cart
         let currentUser = JSON.parse(localStorage.getItem("user"));
         currentUser.cart = [];
         localStorage.setItem("user", JSON.stringify(currentUser));
 
-        
         loadCart();
 
-        // Close the modal
         const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
         checkoutModal.hide();
         
@@ -145,3 +144,4 @@ function processPayment() {
         alert('Please fill in all the fields.');
     }
 }
+

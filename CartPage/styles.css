@@ -1,28 +1,56 @@
-/* Monochrome Theme */
 body {
-    background-color: #1A1A1A; /* Dark background */
-    color: #E0E0E0; /* Light gray text */
-}
-
-h2, h4, strong {
+    background-color: #1A1A1A;
     color: white;
 }
 
-/* Shopping Cart Items */
+.container {
+    background-color: #262626;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+h2, h4 {
+    color: white;
+}
+
 .list-group-item {
+    background-color: #262626;
+    border-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.list-group-item img {
+    border: 1px solid #444;
+    background-color: #333;
+}
+
+.btn-danger {
+    background-color: #555;
+    border-color: #666;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #777;
+    border-color: #999;
+}
+
+#cart-total, #cart-count {
+    color: #ccc;
+}
+
+.card {
     background-color: #262626;
     border-color: #333;
     color: white;
 }
 
-/* Order Summary */
-.card {
-    background-color: #262626;
-    border: 1px solid #333;
-    color: white;
+.card hr {
+    border-color: #444;
 }
 
-/* Buttons */
 .btn-primary {
     background-color: #444;
     border-color: #666;
@@ -34,47 +62,79 @@ h2, h4, strong {
     border-color: #888;
 }
 
-.btn-outline-dark {
-    border-color: white;
-    color: white;
+#checkoutModal .modal-content {
+    background-color: #081518;
+    color: #dbecf1;
+    border-radius: 8px;
+    padding: 20px;
 }
 
-.btn-outline-dark:hover {
-    background-color: white;
-    color: #1A1A1A;
+/* Modal Header */
+#checkoutModal .modal-header {
+    background-color: #1d728a;
+    color: #dbecf1;
+    border-bottom: 1px solid #47c0e1;
 }
 
-/* Modal */
-.checkout-modal .modal-content {
-    background-color: #1A1A1A;
-    color: white;
-    border: 1px solid #444;
+/* Payment Logos */
+.payment-logos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
-.checkout-modal .modal-header,
-.checkout-modal .modal-footer {
-    background-color: #222;
-    border-bottom: 1px solid #333;
+.payment-logos img {
+    width: 120px;  /* Adjusted size */
+    height: auto;
+    max-width: 100%;
 }
 
-/* Input Fields */
+/* Form Inputs */
+#checkoutModal input {
+    background-color: #0c2a31;
+    border: 1px solid #1d728a;
+    color: #dbecf1;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#checkoutModal input::placeholder {
+    color: #99d4e4;
+}
+
+/* Buttons */
+#checkoutModal .btn-primary {
+    background-color: #47c0e1;
+    border: none;
+    color: #081518;
+    font-weight: bold;
+}
+
+#checkoutModal .btn-primary:hover {
+    background-color: #1d728a;
+    color: #dbecf1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .payment-logos img {
+        width: 80px; /* Smaller size on small screens */
+    }
+}
+
 .form-control {
     background-color: #333;
     border: 1px solid #444;
     color: white;
 }
 
-.form-control::placeholder {
-    color: #bbb;
-}
-
 .form-control:focus {
     background-color: #444;
-    border-color: white;
+    border-color: #666;
     color: white;
 }
 
-/* Labels */
 .form-group label {
     color: #bbb;
 }
@@ -116,4 +176,90 @@ h2, h4, strong {
 
 .form-control {
     padding-top: 1.5rem;
+    color: #ccc;
+}
+
+a.btn-outline-dark {
+    border-color: #555;
+    color: white;
+}
+
+a.btn-outline-dark:hover {
+    background-color: #555;
+    border-color: #777;
+    color: white;
+}
+
+/* Modal Background */
+.modal-content {
+    background-color: #081518;
+    border: 1px solid #1d728a;
+    color: #dbecf1;
+    border-radius: 8px;
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #1d728a;
+    color: #dbecf1;
+    border-bottom: 1px solid #47c0e1;
+    font-weight: bold;
+}
+
+/* Close Button */
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+/* Modal Body */
+.modal-body {
+    font-size: 16px;
+    color: #dbecf1;
+}
+
+/* Modal Footer */
+.modal-footer {
+    border-top: 1px solid #47c0e1;
+}
+
+/* Cancel Button */
+.btn-cancel {
+    background-color: transparent;
+    color: #99d4e4;
+    border: 1px solid #99d4e4;
+    transition: 0.3s;
+}
+
+.btn-cancel:hover {
+    background-color: #99d4e4;
+    color: #081518;
+}
+
+/* Remove Button */
+.btn-remove {
+    background-color: #d9534f;
+    color: #dbecf1;
+    border: 1px solid #d9534f;
+    transition: 0.3s;
+}
+
+.btn-remove:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+
+/* Modal Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal.fade .modal-dialog {
+    animation: fadeIn 0.3s ease-in-out;
 }
